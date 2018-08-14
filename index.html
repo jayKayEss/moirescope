@@ -101,7 +101,8 @@ const Constants = {
   Type: {
     None: '',
     Lines: "lines",
-    Dots: "dots"
+    Dots: "dots",
+    Circles: "circles"
   },
   Size: {
     S: 2,
@@ -131,7 +132,7 @@ class MoireScope extends React.Component {
     this.state = {
       layers: [
         {
-          type: Constants.Type.Dots,
+          type: Constants.Type.Circles,
           size: Constants.Size.S,
           weight: Constants.Weight.M,
           speed: Constants.Speed.Slow,
@@ -139,7 +140,7 @@ class MoireScope extends React.Component {
           animation: Constants.Animation.Spin
         },
         {
-          type: Constants.Type.Lines,
+          type: Constants.Type.None,
           size: Constants.Size.S,
           weight: Constants.Weight.L,
           speed: Constants.Speed.Medium,
@@ -265,6 +266,31 @@ const Dots = (props) => {
   );
 }
 
+const Circles = (props) => {
+  var size = parseInt(props.size),
+      weight = parseInt(props.weight),
+      fullsize = 100,
+      step = (weight + size * weight) * 2,
+      count = Math.floor(fullsize * 3 / step / 2),
+      mid = fullsize / 2;
+
+  return (
+    <svg width={fullsize} height={fullsize} xmlns="http://www.w3.org/2000/svg">
+      {[...Array(count)].map((_, i) =>
+        <circle
+          key={i}
+          cx={mid}
+          cy={mid}
+          r={step * (i+1) / 2}
+          fill="none"
+          stroke={props.color}
+          strokeWidth={weight}
+        />
+      )}
+    </svg>
+  );
+}
+
 class MoireLayer extends React.Component {
   constructor(props) {
     super(props);
@@ -298,6 +324,9 @@ class MoireLayer extends React.Component {
       case Constants.Type.Lines:
         svg = Lines(this.props);
         break;
+      case Constants.Type.Circles:
+        svg = Circles(this.props);
+        break;
       default: return null;
     }
 
@@ -307,6 +336,7 @@ class MoireLayer extends React.Component {
     return (
       <div className="layer" style={{
         backgroundImage: dataUri,
+        backgroundPosition: "center center",
         animationName: this.state.running ? this.props.animation : null,
         animationDuration: `${this.props.speed}s`,
         animationIterationCount: 'infinite',
@@ -370,8 +400,10 @@ class Editor extends React.Component {
 
           <div>
             TYPE:&nbsp;
+            <label><input type="radio" name="type" value={Constants.Type.None} onChange={this.onTypeChange} checked={this.props.layers[this.state.currentTab].type == Constants.Type.None}/>NONE </label>
             <label><input type="radio" name="type" value={Constants.Type.Lines} onChange={this.onTypeChange} checked={this.props.layers[this.state.currentTab].type == Constants.Type.Lines}/>LINES </label>
             <label><input type="radio" name="type" value={Constants.Type.Dots} onChange={this.onTypeChange} checked={this.props.layers[this.state.currentTab].type == Constants.Type.Dots}/>DOTS </label>
+            <label><input type="radio" name="type" value={Constants.Type.Circles} onChange={this.onTypeChange} checked={this.props.layers[this.state.currentTab].type == Constants.Type.Circles}/>CIRCLES </label>
           </div>
 
           <div>
