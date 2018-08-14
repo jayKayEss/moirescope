@@ -1,0 +1,414 @@
+<html>
+<head>
+  <title>MoireScope!</title>
+</head>
+<body>
+    <div id="the_app"></div>
+</body>
+<style type="text/css">
+
+html {
+  font-family: monospace;
+  font-size: 14pt;
+}
+
+body {
+  background: #000;
+}
+
+.viewport {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.layer {
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  position: absolute;
+}
+
+.panel {
+  width: 100%;
+  height: 300px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #000C;
+  margin: 0;
+  padding: 0;
+}
+
+.editor {
+  padding: 10px;
+  color: white;
+}
+
+ul.preview {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.preview li {
+  width: 50px;
+  height: 50px;
+  background-color: gray;
+  overflow: hidden;
+  position: relative;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes hover {
+	from {
+		transform: rotate(0deg)
+		           translate(-10%)
+		           rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg)
+		           translate(-10%)
+		           rotate(-360deg);
+	}
+}
+
+</style>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16.4.2/umd/react-dom-server.browser.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script type="text/babel">
+'use strict';
+
+const e = React.createElement;
+
+const Constants = {
+  Type: {
+    None: '',
+    Lines: "lines",
+    Dots: "dots"
+  },
+  Size: {
+    S: 2,
+    M: 3,
+    L: 4
+  },
+  Weight: {
+    S: 1,
+    M: 2,
+    L: 3
+  },
+  Speed: {
+    Slow: 100,
+    Medium: 50,
+    Fast: 10
+  },
+  Animation: {
+    None: '',
+    Spin: 'spin',
+    Hover: 'hover'
+  }
+}
+
+class MoireScope extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      layers: [
+        {
+          type: Constants.Type.Dots,
+          size: Constants.Size.S,
+          weight: Constants.Weight.M,
+          speed: Constants.Speed.Slow,
+          color: "#fff",
+          animation: Constants.Animation.Spin
+        },
+        {
+          type: Constants.Type.Lines,
+          size: Constants.Size.S,
+          weight: Constants.Weight.L,
+          speed: Constants.Speed.Medium,
+          color: "#000",
+          animation: Constants.Animation.Spin
+        }
+      ]
+    };
+
+    this.onTypeChange = this.onTypeChange.bind(this);
+    this.onSizeChange = this.onSizeChange.bind(this);
+    this.onWeightChange = this.onWeightChange.bind(this);
+    this.onSpeedChange = this.onSpeedChange.bind(this);
+    this.onAnimationChange = this.onAnimationChange.bind(this);
+  }
+
+  onTypeChange(i, value) {
+    this.setState((prevState, props) => {
+      prevState.layers[i].type = value;
+
+      return {
+        layers: prevState.layers
+      };
+    });
+  }
+
+  onSizeChange(i, value) {
+    this.setState((prevState, props) => {
+      prevState.layers[i].size = value;
+
+      return {
+        layers: prevState.layers
+      };
+    });
+  }
+
+  onWeightChange(i, value) {
+    this.setState((prevState, props) => {
+      prevState.layers[i].weight = value;
+
+      return {
+        layers: prevState.layers
+      };
+    });
+  }
+
+  onSpeedChange(i, value) {
+    this.setState((prevState, props) => {
+      prevState.layers[i].speed = value;
+
+      return {
+        layers: prevState.layers
+      };
+    });
+  }
+
+  onAnimationChange(i, value) {
+    this.setState((prevState, props) => {
+      prevState.layers[i].animation = value;
+
+      return {
+        layers: prevState.layers
+      };
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <div className="viewport">
+          { this.state.layers.map((layer, i) => <MoireLayer key={i} {...layer} />) }
+        </div>
+        <div className="panel">
+          <Editor
+            layers={this.state.layers}
+            onTypeChange={this.onTypeChange}
+            onSizeChange={this.onSizeChange}
+            onWeightChange={this.onWeightChange}
+            onSpeedChange={this.onSpeedChange}
+            onAnimationChange={this.onAnimationChange}
+          />
+        </div>
+      </div>
+    )
+  }
+}
+
+const Lines = (props) => {
+    var size = parseInt(props.size),
+        weight = parseInt(props.weight),
+        fullsize = weight + (weight * size),
+        mid = fullsize / 2;
+
+    return (
+      <svg width={fullsize} height={fullsize} xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1={mid} x2={fullsize} y2={mid} style={{
+          stroke: props.color,
+          strokeWidth: props.weight
+        }}/>
+        <line x1={mid} y1="0" x2={mid} y2={fullsize} style={{
+          stroke: props.color,
+          strokeWidth: props.weight
+        }}/>
+      </svg>
+    );
+}
+
+const Dots = (props) => {
+  var size = parseInt(props.size),
+      weight = parseInt(props.weight),
+      fullsize = weight + (weight * size),
+      mid = fullsize / 2;
+
+  return (
+    <svg width={fullsize} height={fullsize} xmlns="http://www.w3.org/2000/svg">
+      <circle
+        cx={mid}
+        cy={mid}
+        r={weight}
+        fill={props.color}
+      />
+    </svg>
+  );
+}
+
+class MoireLayer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      running: true
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.speed !== this.props.speed) {
+      this.stopAnimation();
+      setTimeout(this.startAnimation.bind(this), 300);
+    }
+  }
+
+  stopAnimation() {
+    this.setState({ running: false });
+  }
+
+  startAnimation() {
+    this.setState({ running: true });
+  }
+
+  render() {
+    var svg;
+
+    switch (this.props.type) {
+      case Constants.Type.Dots:
+        svg = Dots(this.props);
+        break;
+      case Constants.Type.Lines:
+        svg = Lines(this.props);
+        break;
+      default: return null;
+    }
+
+    const svgString = encodeURIComponent(ReactDOMServer.renderToStaticMarkup(svg));
+    const dataUri = `url("data:image/svg+xml,${svgString}")`;
+
+    return (
+      <div className="layer" style={{
+        backgroundImage: dataUri,
+        animationName: this.state.running ? this.props.animation : null,
+        animationDuration: `${this.props.speed}s`,
+        animationIterationCount: 'infinite',
+        animationTimingFunction: 'linear'
+      }}>&nbsp;</div>
+    )
+  }
+}
+
+class Editor extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentTab: 0
+    };
+
+    this.onLayerChange = this.onLayerChange.bind(this);
+    this.onTypeChange = this.onTypeChange.bind(this);
+    this.onSizeChange = this.onSizeChange.bind(this);
+    this.onWeightChange = this.onWeightChange.bind(this);
+    this.onSpeedChange = this.onSpeedChange.bind(this);
+    this.onAnimationChange = this.onAnimationChange.bind(this);
+  }
+
+  onLayerChange(e) {
+    this.setState({
+      currentTab: e.target.value
+    });
+  }
+
+  onTypeChange(e) {
+    this.props.onTypeChange(this.state.currentTab, e.target.value);
+  }
+
+  onSizeChange(e) {
+    this.props.onSizeChange(this.state.currentTab, e.target.value);
+  }
+
+  onWeightChange(e) {
+    this.props.onWeightChange(this.state.currentTab, e.target.value);
+  }
+
+  onSpeedChange(e) {
+    this.props.onSpeedChange(this.state.currentTab, e.target.value);
+  }
+
+  onAnimationChange(e) {
+    this.props.onAnimationChange(this.state.currentTab, e.target.value);
+  }
+
+  render() {
+    return (
+      <div className="editor">
+        <form>
+          <div>
+            LAYER:&nbsp;
+            <label><input type="radio" name="layer" value={0} onChange={this.onLayerChange} checked={this.state.currentTab == 0}/>1 </label>
+            <label><input type="radio" name="layer" value={1} onChange={this.onLayerChange} checked={this.state.currentTab == 1}/>2 </label>
+          </div>
+
+          <div>
+            TYPE:&nbsp;
+            <label><input type="radio" name="type" value={Constants.Type.Lines} onChange={this.onTypeChange} checked={this.props.layers[this.state.currentTab].type == Constants.Type.Lines}/>LINES </label>
+            <label><input type="radio" name="type" value={Constants.Type.Dots} onChange={this.onTypeChange} checked={this.props.layers[this.state.currentTab].type == Constants.Type.Dots}/>DOTS </label>
+          </div>
+
+          <div>
+            SPACING:&nbsp;
+            <label><input type="radio" name="size" value={Constants.Size.S} onChange={this.onSizeChange} checked={this.props.layers[this.state.currentTab].size == Constants.Size.S}/>SMALL </label>
+            <label><input type="radio" name="size" value={Constants.Size.M} onChange={this.onSizeChange} checked={this.props.layers[this.state.currentTab].size == Constants.Size.M}/>MEDIUM </label>
+            <label><input type="radio" name="size" value={Constants.Size.L} onChange={this.onSizeChange} checked={this.props.layers[this.state.currentTab].size == Constants.Size.L}/>LARGE </label>
+          </div>
+
+          <div>
+            WEIGHT:&nbsp;
+            <label><input type="radio" name="weight" value={Constants.Weight.S} onChange={this.onWeightChange} checked={this.props.layers[this.state.currentTab].weight == Constants.Weight.S}/>SMALL </label>
+            <label><input type="radio" name="weight" value={Constants.Weight.M} onChange={this.onWeightChange} checked={this.props.layers[this.state.currentTab].weight == Constants.Weight.M}/>MEDIUM </label>
+            <label><input type="radio" name="weight" value={Constants.Weight.L} onChange={this.onWeightChange} checked={this.props.layers[this.state.currentTab].weight == Constants.Weight.L}/>LARGE </label>
+          </div>
+
+          <div>
+            SPEED:&nbsp;
+            <label><input type="radio" name="speed" value={Constants.Speed.Slow} onChange={this.onSpeedChange} checked={this.props.layers[this.state.currentTab].speed == Constants.Speed.Slow}/>SLOW </label>
+            <label><input type="radio" name="speed" value={Constants.Speed.Medium} onChange={this.onSpeedChange} checked={this.props.layers[this.state.currentTab].speed == Constants.Speed.Medium}/>MEDIUM </label>
+            <label><input type="radio" name="speed" value={Constants.Speed.Fast} onChange={this.onSpeedChange} checked={this.props.layers[this.state.currentTab].speed == Constants.Speed.Fast}/>FAST </label>
+          </div>
+
+          <div>
+            EFFECT:&nbsp;
+            <label><input type="radio" name="animation" value={Constants.Animation.None} onChange={this.onAnimationChange} checked={this.props.layers[this.state.currentTab].animation == Constants.Animation.None}/>NONE </label>
+            <label><input type="radio" name="animation" value={Constants.Animation.Spin} onChange={this.onAnimationChange} checked={this.props.layers[this.state.currentTab].animation == Constants.Animation.Spin}/>SPIN </label>
+            <label><input type="radio" name="animation" value={Constants.Animation.Hover} onChange={this.onAnimationChange} checked={this.props.layers[this.state.currentTab].animation == Constants.Animation.Hover}/>HOVER </label>
+          </div>
+        </form>
+      </div>
+    )
+  }
+
+}
+
+const domContainer = document.querySelector('#the_app');
+ReactDOM.render(e(MoireScope), domContainer);
+</script>
+</html>
