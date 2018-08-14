@@ -156,11 +156,27 @@ class MoireScope extends React.Component {
     this.state = {
       layers: [
         {
-          type: Constants.Type.Squares,
+          type: Constants.Type.Lines,
           size: Constants.Size.S,
           weight: Constants.Weight.M,
           speed: Constants.Speed.Slow,
           color: Constants.Color.White,
+          animation: Constants.Animation.Spin
+        },
+        {
+          type: Constants.Type.Dots,
+          size: Constants.Size.S,
+          weight: Constants.Weight.L,
+          speed: Constants.Speed.Medium,
+          color: Constants.Color.Black,
+          animation: Constants.Animation.Spin
+        },
+        {
+          type: Constants.Type.None,
+          size: Constants.Size.S,
+          weight: Constants.Weight.L,
+          speed: Constants.Speed.Medium,
+          color: Constants.Color.Black,
           animation: Constants.Animation.Spin
         },
         {
@@ -466,6 +482,8 @@ class Editor extends React.Component {
             LAYER:&nbsp;
             <label><input type="radio" name="layer" value={0} onChange={this.onLayerChange} checked={this.state.currentTab == 0}/>1 </label>
             <label><input type="radio" name="layer" value={1} onChange={this.onLayerChange} checked={this.state.currentTab == 1}/>2 </label>
+            <label><input type="radio" name="layer" value={2} onChange={this.onLayerChange} checked={this.state.currentTab == 2}/>3 </label>
+            <label><input type="radio" name="layer" value={3} onChange={this.onLayerChange} checked={this.state.currentTab == 3}/>4 </label>
           </div>
 
           <div>
