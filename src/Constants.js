@@ -36,6 +36,12 @@ const Constants = {
     Blue: '#00f',
     Magenta: '#f0f',
     Black: '#000'
+  },
+  Palette: {
+    None: null,
+    Pattern: "pattern",
+    Animation: "animation",
+    Color: "color"
   }
 }
 

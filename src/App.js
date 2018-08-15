@@ -51,7 +51,7 @@ class App extends Component {
   }
 
   getRandomLayers() {
-    var numLayers = Math.floor(Math.random() * 2) + 2;
+    var numLayers = Math.round(Math.random() * 2) + 2;
     return [...Array(4)].map( (_, i) => i < numLayers ? RandLayer(i) : DefaultLayer() );
   }
 

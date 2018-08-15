@@ -4,8 +4,8 @@ import Constants from './Constants.js';
 import './Layer.css';
 
 const Lines = (props) => {
-    var size = parseInt(props.size),
-        weight = parseInt(props.weight),
+    var size = parseInt(props.size, 10),
+        weight = parseInt(props.weight, 10),
         fullsize = weight + (weight * size),
         mid = fullsize / 2;
 
@@ -24,8 +24,8 @@ const Lines = (props) => {
 }
 
 const Dots = (props) => {
-  var size = parseInt(props.size),
-      weight = parseInt(props.weight),
+  var size = parseInt(props.size, 10),
+      weight = parseInt(props.weight, 10),
       fullsize = weight + (weight * size),
       mid = fullsize / 2;
 
@@ -42,8 +42,8 @@ const Dots = (props) => {
 }
 
 const Circles = (props) => {
-  var size = parseInt(props.size),
-      weight = parseInt(props.weight),
+  var size = parseInt(props.size, 10),
+      weight = parseInt(props.weight, 10),
       fullsize = 100,
       step = (weight + size * weight) * 2,
       count = Math.floor(fullsize * 3 / step / 2),
@@ -67,12 +67,11 @@ const Circles = (props) => {
 }
 
 const Squares = (props) => {
-  var size = parseInt(props.size),
-      weight = parseInt(props.weight),
+  var size = parseInt(props.size, 10),
+      weight = parseInt(props.weight, 10),
       fullsize = 100,
       step = (weight + size * weight),
-      count = Math.floor(fullsize * 3 / step / 2),
-      mid = fullsize / 2;
+      count = Math.floor(fullsize * 3 / step / 2);
 
   return (
     <svg width={fullsize} height={fullsize} xmlns="http://www.w3.org/2000/svg">
