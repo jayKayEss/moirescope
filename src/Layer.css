@@ -1,0 +1,41 @@
+.layer {
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  position: absolute;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes hover {
+	from {
+		transform: rotate(0deg)
+		           translate(-10%)
+		           rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg)
+		           translate(-10%)
+		           rotate(-360deg);
+	}
+}
+
+@keyframes shuffle {
+  from {
+    transform: translate(-10%);
+  }
+  50% {
+    transform: translate(10%);
+  }
+  to {
+    transform: translate(-10%);
+  }
+}
