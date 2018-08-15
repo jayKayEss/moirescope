@@ -7,13 +7,20 @@
 </body>
 <style type="text/css">
 
-html {
+html, button {
   font-family: monospace;
   font-size: 14pt;
 }
 
 body {
   background: #000;
+}
+
+button {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  border-radius: 2px;
 }
 
 .viewport {
@@ -150,45 +157,42 @@ const Constants = {
   }
 }
 
+const filteredValues = (obj, remove) =>
+  Object.values(obj).filter( v => v !== remove )
+
+const randItem = (obj) => {
+  var array = Object.values(obj);
+  return array[Math.floor(Math.random()*array.length)];
+}
+
+const RandLayer = (i) => {
+  return {
+    type: randItem(filteredValues(Constants.Type, Constants.Type.None)),
+    size: randItem(Constants.Size),
+    weight: randItem(Constants.Weight),
+    speed: randItem(Constants.Speed),
+    animation: randItem(Constants.Animation),
+    color: i == 0 ? randItem(filteredValues(Constants.Color, Constants.Color.Black)) : randItem(Constants.Color)
+  }
+}
+
+const DefaultLayer = () => {
+  return {
+    type: Constants.Type.None,
+    size: Constants.Size.S,
+    weight: Constants.Weight.S,
+    speed: Constants.Speed.Slow,
+    animation: Constants.Animation.None,
+    color: Constants.Color.White
+  }
+}
+
 class MoireScope extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      layers: [
-        {
-          type: Constants.Type.Lines,
-          size: Constants.Size.S,
-          weight: Constants.Weight.M,
-          speed: Constants.Speed.Slow,
-          color: Constants.Color.White,
-          animation: Constants.Animation.Spin
-        },
-        {
-          type: Constants.Type.Dots,
-          size: Constants.Size.S,
-          weight: Constants.Weight.L,
-          speed: Constants.Speed.Medium,
-          color: Constants.Color.Black,
-          animation: Constants.Animation.Spin
-        },
-        {
-          type: Constants.Type.None,
-          size: Constants.Size.S,
-          weight: Constants.Weight.L,
-          speed: Constants.Speed.Medium,
-          color: Constants.Color.Black,
-          animation: Constants.Animation.Spin
-        },
-        {
-          type: Constants.Type.None,
-          size: Constants.Size.S,
-          weight: Constants.Weight.L,
-          speed: Constants.Speed.Medium,
-          color: Constants.Color.Black,
-          animation: Constants.Animation.Spin
-        }
-      ]
-    };
+      layers: this.getRandomLayers()
+    }
 
     this.onTypeChange = this.onTypeChange.bind(this);
     this.onSizeChange = this.onSizeChange.bind(this);
@@ -196,6 +200,12 @@ class MoireScope extends React.Component {
     this.onSpeedChange = this.onSpeedChange.bind(this);
     this.onAnimationChange = this.onAnimationChange.bind(this);
     this.onColorChange = this.onColorChange.bind(this);
+    this.onRandomizeLayers = this.onRandomizeLayers.bind(this);
+  }
+
+  getRandomLayers() {
+    var numLayers = Math.floor(Math.random() * 2) + 2;
+    return [...Array(4)].map( (_, i) => i < numLayers ? RandLayer(i) : DefaultLayer() );
   }
 
   onTypeChange(i, value) {
@@ -258,6 +268,11 @@ class MoireScope extends React.Component {
     });
   }
 
+  onRandomizeLayers() {
+    var newLayers = this.getRandomLayers();
+    this.setState({ layers: newLayers });
+  }
+
   render() {
     return (
       <div>
@@ -273,6 +288,7 @@ class MoireScope extends React.Component {
             onSpeedChange={this.onSpeedChange}
             onAnimationChange={this.onAnimationChange}
             onColorChange={this.onColorChange}
+            onRandomizeLayers={this.onRandomizeLayers}
           />
         </div>
       </div>
@@ -379,6 +395,8 @@ class MoireLayer extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.speed !== this.props.speed) {
+      // animation-duration is not "animateable," so we need to briefly
+      // stop the animation and retstart it for it to take effect.
       this.stopAnimation();
       setTimeout(this.startAnimation.bind(this), 300);
     }
@@ -442,6 +460,7 @@ class Editor extends React.Component {
     this.onSpeedChange = this.onSpeedChange.bind(this);
     this.onAnimationChange = this.onAnimationChange.bind(this);
     this.onColorChange = this.onColorChange.bind(this);
+    this.onRandomizeLayers = this.onRandomizeLayers.bind(this);
   }
 
   onLayerChange(e) {
@@ -472,6 +491,11 @@ class Editor extends React.Component {
 
   onColorChange(e) {
     this.props.onColorChange(this.state.currentTab, e.target.value);
+  }
+
+  onRandomizeLayers(e) {
+    e.preventDefault();
+    this.props.onRandomizeLayers();
   }
 
   render() {
@@ -534,6 +558,10 @@ class Editor extends React.Component {
             <label><input type="radio" name="color" value={Constants.Color.Blue} onChange={this.onColorChange} checked={this.props.layers[this.state.currentTab].color == Constants.Color.Blue}/>BLUE </label>
             <label><input type="radio" name="color" value={Constants.Color.Magenta} onChange={this.onColorChange} checked={this.props.layers[this.state.currentTab].color == Constants.Color.Magenta}/>MAGENTA </label>
             <label><input type="radio" name="color" value={Constants.Color.Black} onChange={this.onColorChange} checked={this.props.layers[this.state.currentTab].color == Constants.Color.Black}/>BLACK </label>
+          </div>
+
+          <div>
+            <button onClick={this.onRandomizeLayers}>RANDOMIZE!</button>
           </div>
         </form>
       </div>
