@@ -6,20 +6,17 @@ const Constants = {
     Circles: "circles",
     Squares: "squares"
   },
-  Size: {
-    S: 2,
-    M: 3,
-    L: 4
+  Spacing: {
+    Min: 1,
+    Max: 10
   },
   Weight: {
-    S: 1,
-    M: 2,
-    L: 3
+    Min: 1,
+    Max: 5
   },
   Speed: {
-    Slow: 100,
-    Medium: 50,
-    Fast: 10
+    Min: 5,
+    Max: 100
   },
   Animation: {
     None: '',

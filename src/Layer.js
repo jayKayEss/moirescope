@@ -4,9 +4,9 @@ import Constants from './Constants.js';
 import './Layer.css';
 
 const Lines = (props) => {
-    var size = parseInt(props.size, 10),
-        weight = parseInt(props.weight, 10),
-        fullsize = weight + (weight * size),
+    var spacing = props.spacing,
+        weight = props.weight,
+        fullsize = weight + spacing,
         mid = fullsize / 2;
 
     return (
@@ -24,17 +24,18 @@ const Lines = (props) => {
 }
 
 const Dots = (props) => {
-  var size = parseInt(props.size, 10),
-      weight = parseInt(props.weight, 10),
-      fullsize = weight + (weight * size),
-      mid = fullsize / 2;
+  var spacing = props.spacing,
+      weight = props.weight,
+      fullsize = weight + spacing,
+      mid = fullsize / 2,
+      radius = weight / 2;
 
   return (
     <svg width={fullsize} height={fullsize} xmlns="http://www.w3.org/2000/svg">
       <circle
         cx={mid}
         cy={mid}
-        r={weight}
+        r={radius}
         fill={props.color}
       />
     </svg>
@@ -42,10 +43,10 @@ const Dots = (props) => {
 }
 
 const Circles = (props) => {
-  var size = parseInt(props.size, 10),
-      weight = parseInt(props.weight, 10),
+  var spacing = props.spacing,
+      weight = props.weight,
       fullsize = 100,
-      step = (weight + size * weight) * 2,
+      step = (weight + spacing),
       count = Math.floor(fullsize * 3 / step / 2),
       mid = fullsize / 2;
 
@@ -56,7 +57,7 @@ const Circles = (props) => {
           key={i}
           cx={mid}
           cy={mid}
-          r={step * i / 2}
+          r={step * i}
           fill="none"
           stroke={props.color}
           strokeWidth={weight}
@@ -67,10 +68,10 @@ const Circles = (props) => {
 }
 
 const Squares = (props) => {
-  var size = parseInt(props.size, 10),
+  var spacing = parseInt(props.spacing, 10),
       weight = parseInt(props.weight, 10),
       fullsize = 100,
-      step = (weight + size * weight),
+      step = (weight + spacing),
       count = Math.floor(fullsize * 3 / step / 2);
 
   return (

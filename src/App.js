@@ -5,19 +5,23 @@ import Editor from './Editor.js';
 import './App.css';
 
 const filteredValues = (obj, remove) =>
-  Object.values(obj).filter( v => v !== remove )
+  Object.values(obj).filter(v => v !== remove)
 
 const randItem = (obj) => {
   var array = Object.values(obj);
-  return array[Math.floor(Math.random()*array.length)];
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+const randInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const RandLayer = (i) => {
   return {
     type: randItem(filteredValues(Constants.Type, Constants.Type.None)),
-    size: randItem(Constants.Size),
-    weight: randItem(Constants.Weight),
-    speed: randItem(Constants.Speed),
+    spacing: randInt(Constants.Spacing.Min, Constants.Spacing.Max),
+    weight: randInt(Constants.Weight.Min, Constants.Weight.Max),
+    speed: randInt(Constants.Speed.Min, Constants.Speed.Max),
     animation: randItem(Constants.Animation),
     color: i === 0 ? randItem(filteredValues(Constants.Color, Constants.Color.Black)) : randItem(Constants.Color)
   }
@@ -26,9 +30,9 @@ const RandLayer = (i) => {
 const DefaultLayer = () => {
   return {
     type: Constants.Type.None,
-    size: Constants.Size.S,
-    weight: Constants.Weight.S,
-    speed: Constants.Speed.Slow,
+    spacing: Math.floor((Constants.Spacing.Max - Constants.Spacing.Min) / 2),
+    weight: Math.floor((Constants.Weight.Max - Constants.Weight.Min) / 2),
+    speed: Math.floor((Constants.Speed.Max - Constants.Speed.Min) / 2),
     animation: Constants.Animation.None,
     color: Constants.Color.White
   }
@@ -52,7 +56,7 @@ class App extends Component {
 
   getRandomLayers() {
     var numLayers = Math.round(Math.random() * 2) + 2;
-    return [...Array(4)].map( (_, i) => i < numLayers ? RandLayer(i) : DefaultLayer() );
+    return [...Array(4)].map((_, i) => i < numLayers ? RandLayer(i) : DefaultLayer());
   }
 
   onTypeChange(i, value) {
@@ -67,7 +71,7 @@ class App extends Component {
 
   onSizeChange(i, value) {
     this.setState((prevState, props) => {
-      prevState.layers[i].size = value;
+      prevState.layers[i].spacing = value;
 
       return {
         layers: prevState.layers

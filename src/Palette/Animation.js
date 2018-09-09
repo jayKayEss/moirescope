@@ -18,9 +18,7 @@ class Animation extends Component {
               </div>
 
               <div>
-                <label><input type="radio" name={"speed_" + i} value={Constants.Speed.Slow} onChange={this.props.onSpeedChange(i)} checked={layer.speed === Constants.Speed.Slow} disabled={layer.type === Constants.Type.None || layer.animation === Constants.Animation.None}/>SLOW </label>
-                <label><input type="radio" name={"speed_" + i} value={Constants.Speed.Medium} onChange={this.props.onSpeedChange(i)} checked={layer.speed === Constants.Speed.Medium} disabled={layer.type === Constants.Type.None || layer.animation === Constants.Animation.None}/>MEDIUM </label>
-                <label><input type="radio" name={"speed_" + i} value={Constants.Speed.Fast} onChange={this.props.onSpeedChange(i)} checked={layer.speed === Constants.Speed.Fast} disabled={layer.type === Constants.Type.None || layer.animation === Constants.Animation.None}/>FAST </label>
+                <label>FAST <input type="range" name={"weight_"+i} value={layer.speed} onChange={this.props.onSpeedChange(i)} min={Constants.Speed.Min} max={Constants.Speed.Max} disabled={layer.type === Constants.Type.None}/> SLOW</label>
               </div>
             </fieldset>
           )}
