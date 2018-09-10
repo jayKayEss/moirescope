@@ -30,9 +30,9 @@ const RandLayer = (i) => {
 const DefaultLayer = () => {
   return {
     type: Constants.Type.None,
-    spacing: Math.floor((Constants.Spacing.Max - Constants.Spacing.Min) / 2),
-    weight: Math.floor((Constants.Weight.Max - Constants.Weight.Min) / 2),
-    speed: Math.floor((Constants.Speed.Max - Constants.Speed.Min) / 2),
+    spacing: Math.ceil((Constants.Spacing.Max - Constants.Spacing.Min + 1) / 2),
+    weight: Math.ceil((Constants.Weight.Max - Constants.Weight.Min + 1) / 2),
+    speed: Math.ceil((Constants.Speed.Max - Constants.Speed.Min + 1) / 2),
     animation: Constants.Animation.None,
     color: Constants.Color.White
   }

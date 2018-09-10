@@ -8,7 +8,7 @@ class Color extends Component {
       <div className={classnames('panel', 'palette', {active: this.props.currentTab === Constants.Palette.Color})}>
         <div className="controls">
           {this.props.layers.map((layer, i) =>
-            <fieldset>
+            <fieldset key={i}>
               <legend>{i+1}</legend>
               <label><input type="radio" name={"color_" + i} value={Constants.Color.White} onChange={this.props.onColorChange(i)} checked={layer.color === Constants.Color.White} disabled={layer.type === Constants.Type.None}/>WHITE </label>
               <label><input type="radio" name={"color_" + i} value={Constants.Color.Red} onChange={this.props.onColorChange(i)} checked={layer.color === Constants.Color.Red} disabled={layer.type === Constants.Type.None}/>RED </label>

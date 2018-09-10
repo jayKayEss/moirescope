@@ -8,7 +8,7 @@ class Animation extends Component {
       <div className={classnames('panel', 'palette', {active: this.props.currentTab === Constants.Palette.Animation})}>
         <div className="controls">
           {this.props.layers.map((layer, i) =>
-            <fieldset>
+            <fieldset key={i}>
               <legend>{i+1}</legend>
               <div>
                 <label><input type="radio" name={"animation_" + i} value={Constants.Animation.None} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.None} disabled={layer.type === Constants.Type.None}/>NONE </label>

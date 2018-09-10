@@ -52,6 +52,13 @@ const Circles = (props) => {
 
   return (
     <svg width={fullsize} height={fullsize} xmlns="http://www.w3.org/2000/svg">
+        <circle
+          cx={mid}
+          cy={mid}
+          r={weight * 0.55}
+          fill={props.color}
+          stroke="none"
+        />
       {[...Array(count)].map((_, i) =>
         <circle
           key={i}
