@@ -172,7 +172,7 @@ class Layer extends Component {
         backgroundImage: dataUri,
         backgroundPosition: "center center",
         animationName: this.state.running ? this.props.animation : null,
-        animationDuration: `${this.props.speed}s`,
+        animationDuration: `${this.props.speed}ms`,
         animationIterationCount: 'infinite',
         animationTimingFunction: Constants.Timing[this.props.animation]
       }}>&nbsp;</div>
