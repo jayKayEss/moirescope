@@ -128,7 +128,7 @@ class Layer extends Component {
       // animation-duration is not "animateable," so we need to briefly
       // stop the animation and retstart it for it to take effect.
       this.stopAnimation();
-      setTimeout(this.startAnimation.bind(this), 300);
+      setTimeout(this.startAnimation.bind(this), 100);
     }
   }
 
