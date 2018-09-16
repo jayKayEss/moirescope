@@ -14,7 +14,7 @@ class Animation extends Component {
                 <label><input type="radio" name={"animation_" + i} value={Constants.Animation.None} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.None} disabled={layer.type === Constants.Type.None}/>NONE </label>
                 <label><input type="radio" name={"animation_" + i} value={Constants.Animation.Spin} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.Spin} disabled={layer.type === Constants.Type.None}/>SPIN </label>
                 <label><input type="radio" name={"animation_" + i} value={Constants.Animation.Hover} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.Hover} disabled={layer.type === Constants.Type.None}/>HOVER </label>
-                <label><input type="radio" name={"animation_" + i} value={Constants.Animation.Shuffle} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.Shuffle} disabled={layer.type === Constants.Type.None}/>SHUFFLE </label>
+                <label><input type="radio" name={"animation_" + i} value={Constants.Animation.Slide} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.Slide} disabled={layer.type === Constants.Type.None}/>SLIDE </label>
                 <label><input type="radio" name={"animation_" + i} value={Constants.Animation.Zoom} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.Zoom} disabled={layer.type === Constants.Type.None}/>ZOOM </label>
               </div>
 

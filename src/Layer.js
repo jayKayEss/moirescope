@@ -3,7 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import Constants from './Constants.js';
 import './Layer.css';
 
-const Lines = (props) => {
+const Grid = (props) => {
     var spacing = props.spacing,
         weight = props.weight,
         fullsize = weight + spacing,
@@ -131,8 +131,8 @@ class Layer extends Component {
       case Constants.Type.Dots:
         svg = Dots(this.props);
         break;
-      case Constants.Type.Lines:
-        svg = Lines(this.props);
+      case Constants.Type.Grid:
+        svg = Grid(this.props);
         break;
       case Constants.Type.Circles:
         svg = Circles(this.props);

@@ -28,7 +28,7 @@
 	}
 }
 
-@keyframes shuffle {
+@keyframes slide {
   from {
     transform: translate(-10%);
   }

@@ -1,7 +1,7 @@
 const Constants = {
   Type: {
     None: '',
-    Lines: "lines",
+    Grid: "grid",
     Dots: "dots",
     Circles: "circles",
     Squares: "squares"
@@ -22,14 +22,14 @@ const Constants = {
     None: '',
     Spin: 'spin',
     Hover: 'hover',
-    Shuffle: 'shuffle',
+    Slide: 'slide',
     Zoom: 'zoom'
   },
   Timing: {
     '': '',
     spin: 'linear',
     hover: 'linear',
-    shuffle: 'ease-in-out',
+    slide: 'ease-in-out',
     zoom: 'ease-in-out'
   },
   Color: {
