@@ -146,6 +146,8 @@ class Layer extends Component {
     const svgString = encodeURIComponent(ReactDOMServer.renderToStaticMarkup(svg));
     const dataUri = `url("data:image/svg+xml,${svgString}")`;
 
+    console.log(Constants.Timing[this.props.animation]);
+
     return (
       <div className="layer" style={{
         backgroundImage: dataUri,
@@ -153,7 +155,7 @@ class Layer extends Component {
         animationName: this.state.running ? this.props.animation : null,
         animationDuration: `${this.props.speed}s`,
         animationIterationCount: 'infinite',
-        animationTimingFunction: 'linear'
+        animationTimingFunction: Constants.Timing[this.props.animation]
       }}>&nbsp;</div>
     )
   }
