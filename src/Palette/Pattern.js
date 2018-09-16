@@ -13,6 +13,7 @@ class Pattern extends Component {
               <div>
                 <label><input type="radio" name={"type_"+i} value={Constants.Type.None} onChange={this.props.onTypeChange(i)} checked={layer.type === Constants.Type.None}/>NONE </label>
                 <label><input type="radio" name={"type_"+i} value={Constants.Type.Grid} onChange={this.props.onTypeChange(i)} checked={layer.type === Constants.Type.Grid}/>GRID </label>
+                <label><input type="radio" name={"type_"+i} value={Constants.Type.Lines} onChange={this.props.onTypeChange(i)} checked={layer.type === Constants.Type.Lines}/>LINES </label>
                 <label><input type="radio" name={"type_"+i} value={Constants.Type.Dots} onChange={this.props.onTypeChange(i)} checked={layer.type === Constants.Type.Dots}/>DOTS </label>
                 <label><input type="radio" name={"type_"+i} value={Constants.Type.Circles} onChange={this.props.onTypeChange(i)} checked={layer.type === Constants.Type.Circles}/>CIRCLES </label>
                 <label><input type="radio" name={"type_"+i} value={Constants.Type.Squares} onChange={this.props.onTypeChange(i)} checked={layer.type === Constants.Type.Squares}/>SQUARES </label>

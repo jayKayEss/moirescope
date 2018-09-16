@@ -23,6 +23,22 @@ const Grid = (props) => {
     );
 }
 
+const Lines = (props) => {
+  var spacing = props.spacing,
+      weight = props.weight,
+      fullsize = weight + spacing,
+      mid = fullsize / 2;
+
+  return (
+    <svg width={fullsize} height={fullsize} xmlns="http://www.w3.org/2000/svg">
+      <line x1={mid} y1="0" x2={mid} y2={fullsize} style={{
+        stroke: props.color,
+        strokeWidth: weight
+      }}/>
+    </svg>
+  );
+}
+
 const Dots = (props) => {
   var spacing = props.spacing,
       weight = props.weight,
@@ -130,6 +146,9 @@ class Layer extends Component {
     switch (this.props.type) {
       case Constants.Type.Dots:
         svg = Dots(this.props);
+        break;
+      case Constants.Type.Lines:
+        svg = Lines(this.props);
         break;
       case Constants.Type.Grid:
         svg = Grid(this.props);

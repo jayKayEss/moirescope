@@ -2,6 +2,7 @@ const Constants = {
   Type: {
     None: '',
     Grid: "grid",
+    Lines: "lines",
     Dots: "dots",
     Circles: "circles",
     Squares: "squares"
