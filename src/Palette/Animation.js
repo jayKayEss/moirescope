@@ -16,6 +16,7 @@ class Animation extends Component {
                 <label><input type="radio" name={"animation_" + i} value={Constants.Animation.Hover} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.Hover} disabled={layer.type === Constants.Type.None}/>HOVER </label>
                 <label><input type="radio" name={"animation_" + i} value={Constants.Animation.Slide} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.Slide} disabled={layer.type === Constants.Type.None}/>SLIDE </label>
                 <label><input type="radio" name={"animation_" + i} value={Constants.Animation.Zoom} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.Zoom} disabled={layer.type === Constants.Type.None}/>ZOOM </label>
+                <label><input type="radio" name={"animation_" + i} value={Constants.Animation.Stretch} onChange={this.props.onAnimationChange(i)} checked={layer.animation === Constants.Animation.Stretch} disabled={layer.type === Constants.Type.None}/>STRETCH </label>
               </div>
 
               <div>

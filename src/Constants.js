@@ -24,14 +24,16 @@ const Constants = {
     Spin: 'spin',
     Hover: 'hover',
     Slide: 'slide',
-    Zoom: 'zoom'
+    Zoom: 'zoom',
+    Stretch: 'stretch'
   },
   Timing: {
     '': '',
     spin: 'linear',
     hover: 'linear',
     slide: 'ease-in-out',
-    zoom: 'ease-in-out'
+    zoom: 'ease-in-out',
+    stretch: 'ease-in-out'
   },
   Color: {
     White: '#fff',

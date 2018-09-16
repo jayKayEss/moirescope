@@ -51,3 +51,15 @@
 		transform: scale(1);
 	}
 }
+
+@keyframes stretch {
+	from {
+		transform: scaleX(2) scaleY(1);
+	}
+	50% {
+		transform: scaleX(1) scaleY(2);
+	}
+	to {
+		transform: scaleX(2) scaleY(1);
+	}
+}
