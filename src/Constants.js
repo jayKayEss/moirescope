@@ -17,7 +17,7 @@ const Constants = {
   },
   Speed: {
     Min: 5000,
-    Max: 10000
+    Max: 100000
   },
   Animation: {
     None: '',
